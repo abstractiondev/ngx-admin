@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { NgxAuthRoutingModule } from './auth-routing.module';
-import { NbAuthModule } from '@nebular/auth';
+import {NbAuthModule, NbPasswordAuthStrategy} from '@nebular/auth';
 import {
   NbAlertModule,
   NbButtonModule,
@@ -15,6 +15,7 @@ import { NgxLoginComponent } from './login/login.component';
 import { NgxRegisterComponent } from './register/register.component';
 import { NgxResetPasswordComponent } from './reset-password/reset-password.component';
 import { NgxRequestPasswordComponent } from './request-password/request-password.component';
+import {environment} from '../../environments/environment';
 
 
 @NgModule({
@@ -28,7 +29,34 @@ import { NgxRequestPasswordComponent } from './request-password/request-password
     NbCheckboxModule,
     NgxAuthRoutingModule,
 
-    NbAuthModule,
+    NbAuthModule.forRoot({
+      strategies: [
+        NbPasswordAuthStrategy.setup({
+          name: 'email',
+          baseEndpoint: environment.baseServiceUrl,
+          login: {
+            endpoint: '/login/Login',
+            method: 'post',
+          },
+          register: {
+            endpoint: '/login/Register',
+            method: 'post',
+          },
+          logout: {
+            endpoint: '/login/Logout',
+            method: 'post',
+          },
+          requestPass: {
+            endpoint: '/login/RequestPassword',
+            method: 'post',
+          },
+          resetPass: {
+            endpoint: '/login/ResetPassword',
+            method: 'post',
+          },
+        }),
+      ],
+    }),
   ],
   declarations: [
     // ... here goes our new components

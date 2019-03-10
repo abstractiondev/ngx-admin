@@ -10,4 +10,5 @@
 
 export const environment = {
   production: false,
+  baseServiceUrl: 'https://home.theball.me:10443',
 };
